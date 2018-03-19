@@ -7,6 +7,8 @@ h3. Compatibility
 Plugin was tested on Redmine v1.4.2stable
 Plugin patches *views\timelog\_report_criteria.html.erb* view.
 
+h3. Note by einfach-ich: fixed problems, tested on Redmine v3.4.2.stable
+
 h3. History
 
 0.0.1
