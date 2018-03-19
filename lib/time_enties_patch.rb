@@ -17,19 +17,22 @@ module TimeEntries
 		module InstanceMethods	  
 			def format_criteria_value_with_linked(criteria_options, value)
 				if value.blank?
-					"[#{l(:label_none)}]"
-				elsif k = criteria_options[:klass]
-					obj = k.find_by_id(value.to_i)
-					if obj.is_a?(Issue)
-						obj.visible? ? "#{obj.tracker} " + (link_to "##{obj.id}: #{obj.subject}", {:controller => "issues", :action => "show", :id => obj.id}) : "##{obj.id}"
-					else
+					  "[#{l(:label_none)}]"
+					elsif k = criteria_options[:klass]
+					  obj = k.find_by_id(value.to_i)
+					  if obj.is_a?(Issue)
+						obj.visible? ? link_to_issue(obj) : "##{obj.id}"
+					  else
 						obj
+					  end
+					elsif cf = criteria_options[:custom_field]
+					  format_value(value, cf)
+					else
+					  value.to_s
 				end
-				else      
-					format_value(value, criteria_options[:format])
-				end        
 			end
 		end
 	end
   end
 end
+
