@@ -1,6 +1,6 @@
 require 'redmine'
-require 'dispatcher'
 require 'time_enties_patch'
+require 'application_helper'
 
 unless Redmine::Plugin.registered_plugins.keys.include?(:redmine_linked_time_entries)
 	Redmine::Plugin.register :redmine_linked_time_entries do
@@ -13,9 +13,9 @@ unless Redmine::Plugin.registered_plugins.keys.include?(:redmine_linked_time_ent
 	end
 end
 
-Dispatcher.to_prepare :redmine_linked_time_entries do
+ActionDispatch::Callbacks.to_prepare do
   require_dependency 'timelog_helper'
-
+	
   unless TimelogHelper.included_modules.include? TimeEntries::Patches::LinkedTimeEntriesPatch
     TimelogHelper.send(:include, TimeEntries::Patches::LinkedTimeEntriesPatch)
   end
